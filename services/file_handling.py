@@ -24,7 +24,14 @@ def _get_part_text(text: str, start: int, size: int) -> tuple[str, int]:
 
 # Функция, формирующая словарь книги
 def prepare_book(path: str) -> None:
-    pass
-
+    with open(f"{path}", 'r', encoding='utf-8') as f:
+        text = f.read()
+    i, count = 1, 0
+    while count < len(text):
+        page, size = _get_part_text(text, count, PAGE_SIZE)
+        book[i] = page.lstrip()
+        i += 1
+        count += size
+        
 # Вызов функции prepare_book для подготовки книги из текстового файла
 prepare_book(os.path.join(sys.path[0], os.path.normpath(BOOK_PATH)))
